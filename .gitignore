@@ -30,3 +30,7 @@ internal_scripts/
 .env
 .env.local
 .env.*.local
+
+# Docs
+wipdocs/
+CHANGELOG.md
