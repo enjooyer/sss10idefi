@@ -895,6 +895,13 @@ const DocsTerminal: React.FC = () => {
                                 <p>As CH, I maintain upgrade authority over the program to implement last-minute new features and/or squash any bugs/issues that may arise during the early phases of launch.</p>
                                 <p><strong>This will be revoked at a later time.</strong></p>
                             </div>
+                            <div className="transparency-card safe">
+                                <h3>Open Source Code</h3>
+                                <p>The SSS10i DeFi Protocol is completely open source. You can view, audit, and contribute to the client code directly on GitHub.</p>
+                                <a href="https://github.com/enjooyer/sss10idefi" target="_blank" rel="noopener noreferrer" className="docs-external-link">
+                                    View Repository ↗
+                                </a>
+                            </div>
                         </div>
 
                         <div className="user-responsibility">
