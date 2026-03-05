@@ -5,4 +5,4 @@
 
 - **$CARDANO:** `2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump`
 - **$SSS10i:** `AnDgVLkfHUmuSrKMFsqFy8d7Fw49CzJjWk1uZZYPcSei`
-- **NFT:** [Magic Eden Collection](https://magiceden.io/marketplace/2fTa9jhfqtsKa13hMg63oJR6ah75iXzg6ShJyqhsx5yk)
+- **NFT:** [Magic Eden Collection](https://magiceden.io/marketplace/sss10i
