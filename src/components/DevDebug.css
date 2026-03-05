@@ -1,0 +1,213 @@
+.dev-debug-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.debug-toggle {
+    background: rgba(255, 100, 100, 0.2);
+    border: 1px solid rgba(255, 100, 100, 0.4);
+    color: #ffaaaa;
+    padding: 8px 16px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s;
+}
+
+.debug-toggle:hover {
+    background: rgba(255, 100, 100, 0.4);
+    color: white;
+}
+
+.debug-content {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 320px;
+    background: rgba(4, 8, 15, 0.95);
+    border: 1px solid var(--primary-color);
+    padding: 24px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.debug-content h4 {
+    margin: 0;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+}
+
+.debug-content p {
+    font-size: 12px;
+    color: var(--text-sub);
+}
+
+.faucet-btn.secondary {
+    background: rgba(160, 232, 255, 0.05);
+    border-color: rgba(160, 232, 255, 0.2);
+    color: var(--text-sub);
+}
+
+.faucet-btn.secondary:hover {
+    background: rgba(160, 232, 255, 0.2);
+}
+
+.diagnostic-toggle {
+    margin-bottom: 20px;
+    background: rgba(255, 51, 102, 0.1);
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    padding: 10px;
+}
+
+.diagnostic-toggle label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: #ff3366;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.diagnostic-toggle input {
+    cursor: pointer;
+}
+
+
+.gold-text {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.debug-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border: 1px solid rgba(160, 232, 255, 0.1);
+}
+
+.info-item {
+    font-size: 10px;
+    font-family: monospace;
+    opacity: 0.8;
+}
+
+.info-item.tiny {
+    font-size: 9px;
+    opacity: 0.6;
+}
+
+.faucet-btn.gold {
+    border-color: #ffd700;
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.faucet-btn.gold:hover {
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.health-badge {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 12px;
+    border: 1px solid rgba(160, 232, 255, 0.1);
+    font-size: 11px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 1px;
+}
+
+.health-badge .text-success {
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+}
+
+.health-badge .text-danger {
+    color: #ff3366;
+    text-shadow: 0 0 5px #ff3366;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.debug-tip {
+    font-size: 10px;
+    color: #ffd700;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.faucet-btn {
+    background: rgba(160, 232, 255, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--secondary-color);
+    padding: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.faucet-btn:hover {
+    background: var(--primary-color);
+    color: #04080f;
+}
+
+.debug-log {
+    background: #000;
+    padding: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    color: #00ff00;
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    min-height: 40px;
+}
+
+/* ═══════ DEVDEBUG MOBILE ═══════ */
+@media (max-width: 768px) {
+    .dev-debug-container {
+        bottom: 70px; /* Above mobile bottom tab bar */
+        right: 10px;
+    }
+
+    .debug-content {
+        width: calc(100vw - 20px);
+        max-width: 360px;
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
+    .debug-toggle {
+        font-size: 9px;
+        padding: 6px 12px;
+    }
+
+    .faucet-btn {
+        padding: 10px;
+        font-size: 10px;
+    }
+
+    .debug-info-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,447 @@
+.stats-container {
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgba(160, 232, 255, 0.2);
+    padding-bottom: 24px;
+}
+
+.stats-header h2 {
+    font-size: 36px;
+    letter-spacing: 6px;
+    margin: 0;
+    color: var(--secondary-color);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.emission-countdown {
+    text-align: right;
+}
+
+.emission-countdown .label {
+    font-size: 13px;
+    color: var(--text-sub);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.emission-countdown .value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 32px;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px rgba(160, 232, 255, 0.6);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.stat-card {
+    background: rgba(4, 8, 15, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(160, 232, 255, 0.15);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.stat-card:hover {
+    border-color: rgba(160, 232, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(160, 232, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-card .label {
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-card .label::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.stat-card .value {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.stat-card .sub-label {
+    font-size: 13px;
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.tvl-card {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(4, 8, 15, 0.9) 0%, rgba(10, 20, 35, 0.95) 100%);
+}
+
+.tvl-card .value {
+    font-size: 56px;
+    color: #fff;
+}
+
+.glow-text {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.burn-card .value {
+    font-size: clamp(20px, 4vw, 32px); /* Responsive small font to fit large burn number */
+    white-space: nowrap;
+}
+
+.fire-text {
+    color: #ff6b6b;
+    text-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(160, 232, 255, 0.1);
+    margin-top: 30px;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), #fff);
+    box-shadow: 0 0 15px var(--primary-color);
+    position: relative;
+}
+
+.progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    animation: sweep 2s infinite linear;
+}
+
+@keyframes sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.ratio-split {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(160, 232, 255, 0.05);
+    border-radius: 4px;
+}
+
+.split-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.split-val {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.split-label {
+    font-size: 11px;
+    color: var(--primary-color);
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+}
+
+.divider {
+    font-size: 36px;
+    color: rgba(160, 232, 255, 0.2);
+    font-weight: 300;
+}
+
+.pool-stats-full {
+    grid-column: span 3;
+    padding: 40px;
+}
+
+.status-table {
+    margin-top: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(160, 232, 255, 0.1);
+    border-radius: 4px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(160, 232, 255, 0.05);
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.table-row:hover:not(.header) {
+    background: rgba(160, 232, 255, 0.03);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row.header {
+    font-size: 12px;
+    color: var(--primary-color);
+    letter-spacing: 3px;
+    background: rgba(160, 232, 255, 0.05);
+    border-bottom: 2px solid rgba(160, 232, 255, 0.2);
+    font-weight: 700;
+}
+
+.table-row span {
+    font-size: 15px;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+}
+
+.table-row span:last-child {
+    text-align: right;
+}
+
+.st-active {
+    color: #4ade80;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.st-active::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px #4ade80;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.stats-footer-note {
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(160, 232, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emission-countdown-inline {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: rgba(160, 232, 255, 0.05);
+    padding: 8px 20px;
+    border: 1px solid rgba(160, 232, 255, 0.2);
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px rgba(160, 232, 255, 0.05);
+}
+
+.emission-countdown-inline .label {
+    font-size: 11px;
+    color: var(--text-sub);
+    letter-spacing: 2px;
+}
+
+.emission-countdown-inline .value {
+    font-size: 15px;
+    color: var(--primary-color);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(160, 232, 255, 0.5);
+}
+
+.stats-footer-note p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tvl-card, .pool-stats-full {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        padding: 30px 20px;
+    }
+
+    .stats-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .emission-countdown {
+        text-align: left;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tvl-card, .pool-stats-full {
+        grid-column: span 1;
+    }
+
+    .stat-card {
+        padding: 30px 20px;
+    }
+
+    .stat-card .value {
+        font-size: 32px;
+    }
+
+    .tvl-card .value {
+        font-size: 40px;
+    }
+
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .table-row.header {
+        display: none; /* Hide header on mobile, use a stack layout */
+    }
+
+    .table-row span {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        text-align: right;
+    }
+
+    .table-row span:nth-child(1)::before { content: 'POOL:'; color: var(--text-sub); }
+    .table-row span:nth-child(2)::before { content: 'EMISSION:'; color: var(--text-sub); }
+    .table-row span:nth-child(3)::before { content: 'RESERVES:'; color: var(--text-sub); }
+    .table-row span:nth-child(4)::before { content: 'STATUS:'; color: var(--text-sub); }
+
+    .stats-footer-note {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+/* ── Live Data Additions ──────────────────────────────── */
+.stats-loading-bar {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    background-size: 200% 100%;
+    animation: loading-sweep 1.5s ease-in-out infinite;
+    margin-bottom: 24px;
+    border-radius: 2px;
+}
+@keyframes loading-sweep {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.loading-pulse {
+    color: var(--primary-color);
+    opacity: 0.6;
+    animation: pulse 1.2s ease-in-out infinite;
+    font-size: 0.9rem;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.coming-soon-card {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    opacity: 0.65;
+}
+.coming-soon-text {
+    color: rgba(160, 232, 255, 0.4) !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 3px;
+}
+
+.coming-soon-row {
+    opacity: 0.45;
+    font-style: italic;
+}
+.st-pending {
+    color: #fbbf24;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.error-row {
+    background: rgba(248, 113, 113, 0.05);
+    border-radius: 4px;
+    padding: 8px 12px !important;
+}

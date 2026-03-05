@@ -1,0 +1,188 @@
+:root {
+  --primary-color: #a0e8ff;
+  /* Ice Blue */
+  --secondary-color: #ffffff;
+  /* Stark White */
+  --accent-color: #42c1f2;
+  /* Deep Ice */
+  --ranch-color: #eaf6fa;
+  /* Frosty white */
+
+  --background-dark: #02050a;
+  /* Abyssal Water */
+  --card-bg: rgba(10, 15, 24, 0.7);
+  /* Frosted dark glass */
+  --card-border: rgba(160, 232, 255, 0.4);
+  --text-main: #f0f8ff;
+  --text-sub: #a8d0e6;
+  --success: #00ffaa;
+
+  --font-heading: 'Orbitron', sans-serif;
+  --font-body: 'Share Tech Mono', monospace;
+
+  --shadow-glow: 0 0 15px rgba(160, 232, 255, 0.15);
+  --shadow-inset: inset 0px 0px 10px rgba(160, 232, 255, 0.05);
+  --radius-card: 0px;
+  /* Severe tech styling */
+  --radius-btn: 0px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background Elements - Frost and Ice Shards */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 100%, #06111a 0%, #02050a 100%);
+  overflow: hidden;
+}
+
+.glacier-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: linear-gradient(0deg, rgba(66, 193, 242, 0.05) 0%, transparent 100%);
+  border-top: 1px solid rgba(160, 232, 255, 0.1);
+  box-shadow: 0 -20px 50px rgba(160, 232, 255, 0.05);
+}
+
+.ice-shard {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 200px solid rgba(160, 232, 255, 0.08);
+  /* Pale ice */
+  filter: drop-shadow(0 0 10px rgba(160, 232, 255, 0.4));
+  animation: floatShard 15s infinite alternate ease-in-out;
+  backdrop-filter: blur(2px);
+}
+
+.frost-drip {
+  position: absolute;
+  background: var(--ranch-color);
+  width: 2px;
+  filter: blur(1px) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+  opacity: 0.6;
+  animation: frostDrip 8s infinite linear;
+}
+
+@keyframes floatShard {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 20px rgba(160, 232, 255, 0.6));
+  }
+
+  100% {
+    transform: translateY(-20px) rotate(3deg) scale(1.02);
+  }
+}
+
+@keyframes frostDrip {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* Base Styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  margin: 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-btn);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 0px;
+}
+
+/* ═══════ ANIMATION PERFORMANCE ═══════ */
+.ice-shard,
+.frost-drip {
+  will-change: transform, opacity;
+}
+
+.ice-shard {
+  backdrop-filter: none; /* Remove expensive blur from animated elements */
+}
+
+/* ═══════ REDUCED MOTION ═══════ */
+@media (prefers-reduced-motion: reduce) {
+  .ice-shard,
+  .frost-drip {
+    animation: none !important;
+  }
+}

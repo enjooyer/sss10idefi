@@ -1,0 +1,1203 @@
+/* ═══════════════════════════════════════════════════════════════
+   PORTFOLIO PAGE — Personal Staking Dashboard
+   ═══════════════════════════════════════════════════════════════ */
+
+.portfolio-container {
+    padding: 0 1rem 5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ── WALLET GUARD ─────────────────────────────────────────── */
+.portfolio-connect-guard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    gap: 1.2rem;
+}
+
+.portfolio-connect-guard .guard-icon {
+    font-size: 3rem;
+    opacity: 0.6;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.portfolio-connect-guard h3 {
+    font-family: 'Share Tech Mono', monospace;
+    color: #7dd3fc;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.portfolio-connect-guard p {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+/* ── SUMMARY CARD ─────────────────────────────────────────── */
+.portfolio-summary {
+    background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.85));
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-summary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, #38bdf8, #7dd3fc, transparent);
+}
+
+.portfolio-summary .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.portfolio-summary .summary-item {
+    text-align: center;
+}
+
+.portfolio-summary .summary-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.3rem;
+}
+
+.portfolio-summary .summary-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #7dd3fc;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(56,189,248,0.3);
+}
+
+.portfolio-summary .summary-value.fire-accent {
+    color: #fb923c;
+    text-shadow: 0 0 12px rgba(251,146,60,0.3);
+}
+
+/* ── SUMMARY SHARE BUTTON ─────────────────────────────────── */
+.summary-share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    margin-top: 0.85rem;
+    padding: 0.6rem 1rem;
+    background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(74,222,128,0.08));
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: #7dd3fc;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.25s ease;
+}
+
+.summary-share-btn:hover {
+    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(74,222,128,0.15));
+    border-color: rgba(56,189,248,0.45);
+    box-shadow: 0 0 20px rgba(56,189,248,0.15);
+    transform: translateY(-1px);
+}
+
+.summary-share-btn:active {
+    transform: translateY(0);
+}
+
+/* ── SECTION TITLE ────────────────────────────────────────── */
+.portfolio-section-title {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 1.5rem 0 0.75rem;
+    padding-left: 0.25rem;
+}
+
+/* ── POOL POSITION CARDS ──────────────────────────────────── */
+.portfolio-positions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.position-card {
+    background: rgba(15,23,42,0.9);
+    border: 1px solid rgba(56,189,248,0.1);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.position-card:hover {
+    border-color: rgba(56,189,248,0.25);
+    box-shadow: 0 0 20px rgba(56,189,248,0.05);
+}
+
+.position-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.position-pool-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.position-icons {
+    position: relative;
+    width: 44px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.position-icons img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(15,23,42,0.9);
+    position: absolute;
+    top: 0;
+}
+
+.position-icons img:first-child {
+    left: 0;
+    z-index: 2;
+}
+
+.position-icons img:last-child {
+    left: 16px;
+    z-index: 1;
+}
+
+.position-pool-name {
+    font-family: 'Share Tech Mono', monospace;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.position-pool-title {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ── HEADER ACTIONS (Harvest + Share) ─────────────────────── */
+.position-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.position-harvest-btn {
+    background: rgba(74,222,128,0.1);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.position-harvest-btn:hover:not(:disabled) {
+    background: rgba(74,222,128,0.2);
+    border-color: rgba(74,222,128,0.45);
+    box-shadow: 0 0 12px rgba(74,222,128,0.15);
+}
+
+.position-harvest-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.position-share-btn {
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: #7dd3fc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.position-share-btn:hover {
+    background: rgba(56,189,248,0.2);
+    border-color: rgba(56,189,248,0.4);
+    box-shadow: 0 0 12px rgba(56,189,248,0.15);
+}
+
+.position-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.position-stat-item {
+    text-align: center;
+}
+
+.position-stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+}
+
+.position-stat-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #e2e8f0;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.position-stat-value.yield-accent {
+    color: #4ade80;
+    text-shadow: 0 0 8px rgba(74,222,128,0.2);
+}
+
+/* ── CARDANO TRACKER ──────────────────────────────────────── */
+.cardano-tracker {
+    background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.85));
+    border: 1px solid rgba(251,146,60,0.15);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cardano-tracker::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, #fb923c, #fbbf24, transparent);
+}
+
+.cardano-tracker-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.cardano-tracker-header img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.cardano-tracker-header h4 {
+    font-family: 'Share Tech Mono', monospace;
+    color: #fbbf24;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.cardano-tracker .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cardano-tracker .tracker-item {
+    text-align: center;
+}
+
+.cardano-tracker .tracker-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+}
+
+.cardano-tracker .tracker-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #fbbf24;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.supply-bar-container {
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.supply-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #fb923c, #fbbf24);
+    border-radius: 6px;
+    transition: width 1s ease-out;
+    min-width: 2px;
+    box-shadow: 0 0 8px rgba(251,146,60,0.4);
+}
+
+.supply-bar-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.55rem;
+    text-align: right;
+    margin-top: 0.25rem;
+}
+
+/* ── NO POSITIONS MESSAGE ─────────────────────────────────── */
+.portfolio-empty {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255,255,255,0.3);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+}
+
+/* ── SHARE MODAL ──────────────────────────────────────────── */
+.share-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    animation: fadeIn 0.2s ease;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.share-modal {
+    max-width: 520px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: auto 0;
+    flex-shrink: 0;
+}
+
+.share-close-btn {
+    align-self: flex-end;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    color: #e2e8f0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.share-close-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ── PNL CARD (the shareable screenshot card) ─────────────── */
+.pnl-card {
+    background: linear-gradient(145deg, #0c1524, #122036, #0e1a2e);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pnl-bg-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    border-radius: 16px;
+    pointer-events: none;
+    transition: filter 0.2s;
+}
+
+.pnl-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.pnl-content {
+    position: relative;
+    z-index: 3;
+    padding: 1.5rem;
+}
+
+.pnl-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.pnl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.pnl-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pnl-brand-icon {
+    font-size: 1.2rem;
+}
+
+.pnl-brand-text {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.pnl-pool-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pnl-pool-icons {
+    position: relative;
+    width: 40px;
+    height: 24px;
+}
+
+.pnl-pool-icons img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #0c1524;
+    position: absolute;
+    top: 0;
+}
+
+.pnl-pool-icons img:first-child {
+    left: 0;
+    z-index: 2;
+}
+
+.pnl-pool-icons img:last-child {
+    left: 14px;
+    z-index: 1;
+}
+
+/* ── PNL TOTAL BADGE ──────────────────────────────────────── */
+.pnl-total-badge {
+    font-family: 'Share Tech Mono', monospace;
+    color: #7dd3fc;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+}
+
+.pnl-pool-name {
+    font-family: 'Share Tech Mono', monospace;
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.pnl-yield-section {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.pnl-yield-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.pnl-yield-amount {
+    font-family: 'Share Tech Mono', monospace;
+    color: #4ade80;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(74,222,128,0.3);
+    margin-bottom: 0.2rem;
+}
+
+.pnl-yield-usd {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(74,222,128,0.9);
+    font-size: 0.85rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.pnl-deposit-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.pnl-deposit-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.pnl-deposit-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.pnl-deposit-hidden {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+}
+
+/* ── PNL STATS GRID (total portfolio card) ────────────────── */
+.pnl-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.pnl-stat-item {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    text-align: center;
+}
+
+.pnl-stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.pnl-stat-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.pnl-stat-apr {
+    color: #fbbf24;
+    text-shadow: 0 0 10px rgba(251,191,36,0.3);
+}
+
+.pnl-stat-yield {
+    color: #4ade80;
+    text-shadow: 0 0 10px rgba(74,222,128,0.3);
+}
+
+.pnl-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pnl-watermark {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.pnl-date {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.55rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* ── BACKGROUND PICKER ────────────────────────────────────── */
+.bg-picker {
+    background: rgba(15,23,42,0.8);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.75rem;
+}
+
+.bg-picker-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+.bg-picker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.bg-thumb {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.6rem;
+}
+
+.bg-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bg-thumb:hover {
+    border-color: rgba(56,189,248,0.4);
+}
+
+.bg-thumb-active {
+    border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56,189,248,0.3);
+}
+
+/* ── TONE SLIDER ──────────────────────────────────────────── */
+.tone-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.tone-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+
+.tone-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(0,0,0,0.6));
+    border-radius: 2px;
+    outline: none;
+}
+
+.tone-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #7dd3fc;
+    cursor: pointer;
+    border: 2px solid #0c1524;
+    box-shadow: 0 0 6px rgba(56,189,248,0.4);
+}
+
+.tone-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #7dd3fc;
+    cursor: pointer;
+    border: 2px solid #0c1524;
+    box-shadow: 0 0 6px rgba(56,189,248,0.4);
+}
+
+/* ── DEEP FRY TOGGLE ──────────────────────────────────────── */
+.deepfry-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.deepfry-toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #fb923c;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.deepfry-toggle span {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+.deepfry-toggle:has(input:checked) span {
+    color: #fb923c;
+    text-shadow: 0 0 8px rgba(251,146,60,0.4);
+}
+
+
+/* ── SHARE ACTIONS ────────────────────────────────────────── */
+.share-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-action-btn {
+    flex: 1;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 8px;
+    padding: 0.6rem;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: #7dd3fc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.share-action-btn:hover {
+    background: rgba(56,189,248,0.2);
+    border-color: rgba(56,189,248,0.4);
+    box-shadow: 0 0 15px rgba(56,189,248,0.15);
+}
+
+.share-toggle-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 0.6rem;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+
+.share-toggle-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* ── SAVE PREVIEW OVERLAY (mobile long-press to save) ───── */
+.save-preview-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: fadeIn 0.2s ease;
+}
+
+.save-preview-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.save-preview-image {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(56,189,248,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    /* Critical: allows iOS long-press "Save Image" context menu */
+    -webkit-touch-callout: default;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.save-preview-hint {
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+    /* Container */
+    .portfolio-container {
+        padding: 0 0.75rem 7rem; /* extra bottom for PWA tab bar */
+    }
+
+    /* Summary card — stack vertically */
+    .portfolio-summary {
+        padding: 1rem;
+    }
+
+    .portfolio-summary .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .summary-share-btn {
+        font-size: 0.7rem;
+        padding: 0.55rem 0.75rem;
+    }
+
+    .portfolio-summary .summary-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .portfolio-summary .summary-item:last-child {
+        border-bottom: none;
+    }
+
+    .portfolio-summary .summary-label {
+        font-size: 0.65rem;
+        text-align: left;
+    }
+
+    .portfolio-summary .summary-value {
+        font-size: 1rem;
+        text-align: right;
+    }
+
+    /* Position cards */
+    .position-card {
+        padding: 0.85rem 0.9rem;
+    }
+
+    .position-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .position-header-actions {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 0.4rem;
+    }
+
+    .position-harvest-btn,
+    .position-share-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    /* Position stats — 2 columns on mobile */
+    .position-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+        margin-top: 0.5rem;
+    }
+
+    .position-stat-label {
+        font-size: 0.55rem;
+    }
+
+    .position-stat-value {
+        font-size: 0.78rem;
+    }
+
+    /* CARDANO tracker */
+    .cardano-tracker {
+        padding: 1rem;
+    }
+
+    .cardano-tracker .tracker-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+    }
+
+    .cardano-tracker .tracker-value {
+        font-size: 0.75rem;
+    }
+
+    .cardano-tracker .tracker-label {
+        font-size: 0.5rem;
+    }
+
+    /* ── Share modal — scrollable bottom sheet ────────────────
+       On mobile, ditch flexbox entirely. The overlay becomes
+       a simple block-level scroll container. The modal sits
+       at the bottom via margin-top:auto. This is the most
+       reliable pattern for iOS/Android touch scrolling.
+       ──────────────────────────────────────────────────────── */
+    .share-overlay {
+        display: block;
+        padding: 0;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .share-modal {
+        display: block;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        margin-top: calc(100vh - 92vh); /* push down to ~8vh from top */
+        background: rgba(12,21,36,0.99);
+        border-radius: 20px 20px 0 0;
+        border: 1px solid rgba(56,189,248,0.1);
+        border-bottom: none;
+        padding: 1rem 1rem 2rem;
+        min-height: 60vh;
+    }
+
+    .share-close-btn {
+        align-self: flex-end;
+        margin-bottom: 0.25rem;
+    }
+
+    /* PNL card mobile */
+    .pnl-content {
+        padding: 1rem;
+    }
+
+    .pnl-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .pnl-yield-amount {
+        font-size: 1.5rem;
+    }
+
+    .pnl-yield-usd {
+        font-size: 0.75rem;
+    }
+
+    .pnl-yield-section {
+        margin-bottom: 0.85rem;
+    }
+
+    .pnl-deposit-section {
+        padding: 0.6rem;
+        gap: 0.5rem;
+    }
+
+    /* Stats grid on mobile */
+    .pnl-stats-grid {
+        gap: 0.4rem;
+    }
+
+    .pnl-stat-item {
+        padding: 0.5rem 0.6rem;
+    }
+
+    .pnl-stat-label {
+        font-size: 0.45rem;
+    }
+
+    .pnl-stat-value {
+        font-size: 0.8rem;
+    }
+
+    /* Background picker mobile */
+    .bg-picker {
+        padding: 0.65rem;
+    }
+
+    .bg-picker-grid {
+        gap: 0.35rem;
+    }
+
+    .bg-thumb {
+        width: 34px;
+        height: 34px;
+    }
+
+    /* Share action buttons — 2 rows on mobile */
+    .share-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+    }
+
+    .share-toggle-btn {
+        grid-column: 1 / -1; /* full width */
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — VERY SMALL (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+    .portfolio-container {
+        padding: 0 0.5rem 7rem;
+    }
+
+    .position-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cardano-tracker .tracker-grid {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+
+    .cardano-tracker .tracker-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .cardano-tracker .tracker-value {
+        font-size: 0.85rem;
+    }
+
+    .pnl-yield-amount {
+        font-size: 1.25rem;
+    }
+
+    .pnl-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+    }
+
+    .pnl-stat-value {
+        font-size: 0.7rem;
+    }
+
+    .bg-thumb {
+        width: 28px;
+        height: 28px;
+    }
+}
+

@@ -1,0 +1,146 @@
+.dex-container {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dex-page-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, rgba(160, 232, 255, 0.1), transparent, rgba(160, 232, 255, 0.1));
+    z-index: -1;
+}
+
+.dex-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dex-header h2 {
+    font-size: 28px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.dex-header p {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+}
+
+.dex-trust-badge {
+    font-size: 10px;
+    color: #a0e8ff;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+.dex-trust-badge strong {
+    color: #f7931a;
+    /* Jupiter themed or accent */
+    text-shadow: 0 0 5px rgba(247, 147, 26, 0.3);
+}
+
+.pulse {
+    display: inline-block;
+    color: #4ade80;
+    margin-right: 6px;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.terminal-frame {
+    background: #0d1117;
+    border: 1px solid rgba(160, 232, 255, 0.1);
+    min-height: 560px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dex-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#integrated-terminal {
+    width: 100%;
+    height: 100%;
+}
+
+.frame-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(160, 232, 255, 0.03), transparent);
+    z-index: 10;
+}
+
+.dex-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.asset-ticker {
+    font-size: 9px;
+    color: rgba(160, 232, 255, 0.5);
+    letter-spacing: 1px;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+/* Override Jupiter internal styles to match Facility Sieben if possible */
+/* Note: Integrated Terminal is inside a Shadow DOM, some overrides might be limited */
+
+/* ═══════ DEX PAGE MOBILE ═══════ */
+@media (max-width: 768px) {
+    .dex-container {
+        padding: 16px 8px;
+    }
+
+    .dex-header h2 {
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+
+    .terminal-frame {
+        min-height: 480px;
+        border-radius: 4px;
+    }
+
+    .dex-header {
+        margin-bottom: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dex-header h2 {
+        font-size: 18px;
+    }
+
+    .terminal-frame {
+        min-height: 420px;
+    }
+}

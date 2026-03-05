@@ -1,0 +1,26 @@
+{
+  "name": "SSS10i #70",
+  "symbol": "SSS10i",
+  "description": "A hyper-rare fractional liquidity SSS10i Artifact extracted from Facility Sieben. Immutable supply capped at 77.",
+  "seller_fee_basis_points": 0,
+  "image": "69.jpg",
+  "attributes": [
+    {
+      "trait_type": "Origin",
+      "value": "Facility Sieben"
+    },
+    {
+      "trait_type": "Extraction Core",
+      "value": "SPL-404"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "69.jpg",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
+  }
+}
