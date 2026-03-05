@@ -30,7 +30,7 @@ interface PoolCardProps {
 
 const PoolCard: React.FC<PoolCardProps> = ({
     title, subtitle, staked, tokenIcon, baseIcon, isHot,
-    totalStakedUsd, endsInDays, lpMintId, poolPubkey, isTrinity, isOffline,
+    totalStakedUsd, lpMintId, poolPubkey, isTrinity, isOffline,
     raydiumPoolId, poolMintA, poolMintB
 }) => {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -384,10 +384,6 @@ const PoolCard: React.FC<PoolCardProps> = ({
                         <div className="detail-row">
                             <span className="detail-label">Total Value Locked:</span>
                             <span className="detail-value highlight-gold" title={`${liveStaked} LP total`}>{poolPubkey ? liveStakedUsd : totalStakedUsd}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">Ends in:</span>
-                            <span className="detail-value">{endsInDays} days</span>
                         </div>
                     </div>
                 )}
