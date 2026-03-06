@@ -326,10 +326,10 @@ const StatsPage: React.FC = () => {
                     sub={`OF ${TOTAL_NFT_SUPPLY} TOTAL UNITS`}
                 />
 
-                {/* 404 Resource Ratio */}
+                {/* Resource Ratio */}
                 <div className="stat-card distribution-card">
                     <div className="card-bg-effect"></div>
-                    <p className="label">404 RESOURCE RATIO</p>
+                    <p className="label">RESOURCE RATIO</p>
                     <div className="ratio-split">
                         <div className="split-item">
                             <span className="split-val">
