@@ -69,10 +69,18 @@ const navSections: { category: string; items: NavItem[] }[] = [
     }
 ];
 
+interface TreasuryBalance {
+    name: string;
+    address: string;
+    sss10i: number;
+    nfts: number | null;
+    isGlobal?: boolean;
+}
+
 const DocsTerminal: React.FC = () => {
     const [activeSection, setActiveSection] = useState<DocSection>('introduction');
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [treasuryBalances, setTreasuryBalances] = useState<{name: string; sss10i: number; nfts: number | null}[]>([]);
+    const [treasuryBalances, setTreasuryBalances] = useState<TreasuryBalance[]>([]);
     const [fetchingTreasury, setFetchingTreasury] = useState(false);
 
     useEffect(() => {
@@ -81,7 +89,7 @@ const DocsTerminal: React.FC = () => {
                 setFetchingTreasury(true);
                 try {
                     const connection = getSmartConnection();
-                    const balances: {name: string; sss10i: number; nfts: number | null}[] = [];
+                    const balances: TreasuryBalance[] = [];
 
                     // 1. NFT Contract Treasury
                     const [nftTreasuryPda] = PublicKey.findProgramAddressSync(
@@ -122,20 +130,23 @@ const DocsTerminal: React.FC = () => {
 
                     balances.push({
                         name: 'Wrap Contract Treasury',
+                        address: nftTreasuryPda.toBase58(),
                         sss10i: wrapSss10iLiquid,
-                        nfts: nftCount
+                        nfts: nftCount,
+                        isGlobal: true
                     });
 
                     // 2. Pool Treasuries
                     const activePools = POOL_CONFIGS.filter(p => !p.isOffline && p.poolPubkey);
                     const poolPdas = activePools.map(p => new PublicKey(p.poolPubkey!));
-                    const treasuryAtas = poolPdas.map(poolPk => {
+                    const treasuryPdas = poolPdas.map(poolPk => {
                         const [treasuryPda] = PublicKey.findProgramAddressSync(
                             [anchor.utils.bytes.utf8.encode('treasury'), poolPk.toBuffer()],
                             PROGRAM_ID
                         );
-                        return getAssociatedTokenAddressSync(SSS10i_MINT, treasuryPda, true, TOKEN_PROGRAM_ID);
+                        return treasuryPda;
                     });
+                    const treasuryAtas = treasuryPdas.map(tPda => getAssociatedTokenAddressSync(SSS10i_MINT, tPda, true, TOKEN_PROGRAM_ID));
 
                     try {
                         const treasuryInfos = await connection.getMultipleAccountsInfo(treasuryAtas);
@@ -148,12 +159,21 @@ const DocsTerminal: React.FC = () => {
                             }
                             balances.push({
                                 name: `${pool.title} Treasury (${pool.subtitle})`,
+                                address: treasuryPdas[index].toBase58(),
                                 sss10i: amount,
                                 nfts: null
                             });
                         });
                     } catch (e) {
                         console.warn("Could not fetch pool treasury balances", e);
+                        activePools.forEach((pool, index) => {
+                            balances.push({
+                                name: `${pool.title} Treasury (${pool.subtitle})`,
+                                address: treasuryPdas[index].toBase58(),
+                                sss10i: 0,
+                                nfts: null
+                            });
+                        });
                     }
 
                     setTreasuryBalances(balances);
@@ -985,10 +1005,25 @@ const DocsTerminal: React.FC = () => {
                                             <span style={{flex: 1, textAlign: 'center', opacity: 0.5}} className="loading-pulse">SYNCING WITH CHAIN...</span>
                                         </div>
                                     ) : treasuryBalances.map((tb, idx) => (
-                                        <div className="fee-row" key={idx}>
-                                            <span className="fee-label" style={{flex: 2, paddingLeft: '0'}}>{tb.name}</span>
-                                            <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px'}}>{tb.sss10i > 0 ? tb.sss10i.toFixed(4) : '0.0000'}</span>
-                                            <span className="fee-note" style={{flex: 1, textAlign: 'right'}}>{tb.nfts !== null ? tb.nfts : '—'}</span>
+                                        <div className="fee-row" key={idx} style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+                                            <div style={{ flex: 2, display: 'flex', flexDirection: 'column', paddingLeft: '0' }}>
+                                                <span className="fee-label" style={{ paddingLeft: '0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    {tb.name}
+                                                    {tb.isGlobal && <span style={{ fontSize: '0.65em', background: 'rgba(0,255,128,0.1)', color: '#00ff80', padding: '2px 6px', borderRadius: '4px', letterSpacing: '1px' }}>GLOBAL</span>}
+                                                </span>
+                                                <a href={`https://solscan.io/account/${tb.address}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75em', color: '#a3a3a3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '4px', width: 'fit-content' }}>
+                                                    <span style={{ fontFamily: 'monospace' }}>{tb.address.slice(0, 4)}...{tb.address.slice(-4)}</span>
+                                                    <span style={{ fontSize: '0.9em' }}>↗</span>
+                                                </a>
+                                            </div>
+                                            <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', fontSize: '1.1em'}}>{tb.sss10i > 0 ? tb.sss10i.toFixed(4) : '0.0000'}</span>
+                                            <span className="fee-note" style={{flex: 1, textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                                {tb.nfts !== null ? (
+                                                    <span style={{ color: '#00ff80', fontWeight: 'bold', fontSize: '1.1em' }}>{tb.nfts}</span>
+                                                ) : (
+                                                    <span style={{ opacity: 0.3 }}>—</span>
+                                                )}
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
