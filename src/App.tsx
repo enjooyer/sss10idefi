@@ -17,8 +17,9 @@ const PortfolioPage = lazy(() => import('./components/PortfolioPage'));
 
 // Minimal loading fallback
 const PageLoader = () => (
-  <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-sub)', letterSpacing: '3px', fontFamily: 'var(--font-body)' }}>
-    LOADING MODULE...
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', padding: '60px 20px', color: 'var(--primary-color)', letterSpacing: '3px', fontFamily: 'var(--font-body)', textShadow: '0 0 8px rgba(160, 232, 255, 0.4)' }}>
+    <div className="status-box"></div>
+    INITIALIZING SUBCYSTEM...
   </div>
 );
 

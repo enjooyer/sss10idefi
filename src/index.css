@@ -27,11 +27,16 @@
   --radius-btn: 0px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background-color: var(--background-dark);
   color: var(--text-main);
   min-height: 100vh;
