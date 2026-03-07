@@ -40,12 +40,13 @@ const SwapCard: React.FC = () => {
     const { showToast } = useToast();
 
     // Fetch on-chain balance for a given token mint
-    const fetchBalance = useCallback(async (mintStr: string, decimals: number, isToken2022?: boolean): Promise<string> => {
+    const fetchBalance = useCallback(async (mintStr: string, isToken2022?: boolean): Promise<string> => {
         if (!wallet) return '—';
         try {
             if (mintStr === 'So11111111111111111111111111111111111111112') {
                 const lamports = await connection.getBalance(wallet.publicKey);
-                return (lamports / LAMPORTS_PER_SOL).toFixed(4);
+                const str = (lamports / LAMPORTS_PER_SOL).toFixed(9);
+                return str.includes('.') ? str.replace(/0+$/, '').replace(/\.$/, '') : str;
             }
             const mintPk = new PublicKey(mintStr);
             // Token2022 tokens need the correct program ID for ATA derivation
@@ -56,12 +57,12 @@ const SwapCard: React.FC = () => {
                 try {
                     const ata = getAssociatedTokenAddressSync(mintPk, wallet.publicKey, false, prog);
                     const info = await connection.getTokenAccountBalance(ata);
-                    return (Number(info.value.amount) / 10 ** decimals).toFixed(4);
+                    return info.value.uiAmountString || '0';
                 } catch { /* try next program */ }
             }
-            return '0.0000';
+            return '0';
         } catch {
-            return '0.0000';
+            return '0';
         }
     }, [wallet, connection]);
 
@@ -71,11 +72,11 @@ const SwapCard: React.FC = () => {
         if (!wallet) { setFromBalance('—'); setToBalance('—'); return; }
         
         // Fetch and safely set balances
-        fetchBalance(fromToken.mint, fromToken.decimals, fromToken.isToken2022).then(bal => {
+        fetchBalance(fromToken.mint, fromToken.isToken2022).then(bal => {
             if (active) setFromBalance(bal);
         });
         
-        fetchBalance(toToken.mint, toToken.decimals, toToken.isToken2022).then(bal => {
+        fetchBalance(toToken.mint, toToken.isToken2022).then(bal => {
             if (active) setToBalance(bal);
         });
 
