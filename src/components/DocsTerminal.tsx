@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { PublicKey } from '@solana/web3.js';
+import { getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { PROGRAM_ID, SSS10i_MINT, NFT_MINT, RPC_URL } from '../utils/constants';
+import * as anchor from '@coral-xyz/anchor';
+import { POOL_CONFIGS } from '../utils/mockApi';
+import { getSmartConnection } from '../utils/SmartConnection';
 import './DocsTerminal.css';
 
 type DocSection = 
@@ -66,6 +72,102 @@ const navSections: { category: string; items: NavItem[] }[] = [
 const DocsTerminal: React.FC = () => {
     const [activeSection, setActiveSection] = useState<DocSection>('introduction');
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [treasuryBalances, setTreasuryBalances] = useState<{name: string; sss10i: number; nfts: number | null}[]>([]);
+    const [fetchingTreasury, setFetchingTreasury] = useState(false);
+
+    useEffect(() => {
+        if (activeSection === 'transparency') {
+            const fetchTreasury = async () => {
+                setFetchingTreasury(true);
+                try {
+                    const connection = getSmartConnection();
+                    const balances: {name: string; sss10i: number; nfts: number | null}[] = [];
+
+                    // 1. NFT Contract Treasury
+                    const [nftTreasuryPda] = PublicKey.findProgramAddressSync(
+                        [anchor.utils.bytes.utf8.encode('nft_treasury')],
+                        PROGRAM_ID
+                    );
+                    
+                    let nftCount = 0;
+                    let wrapSss10iLiquid = 0;
+
+                    try {
+                        const tAta = getAssociatedTokenAddressSync(SSS10i_MINT, nftTreasuryPda, true, TOKEN_PROGRAM_ID);
+                        const tBal = await connection.getTokenAccountBalance(tAta);
+                        wrapSss10iLiquid = Number(tBal.value.uiAmount ?? 0);
+                    } catch (e) {
+                        console.warn("Could not fetch NFT Treasury SSS10i balance", e);
+                    }
+
+                    try {
+                        const dasRes = await fetch(RPC_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                jsonrpc: '2.0', id: 'stats-nft',
+                                method: 'searchAssets',
+                                params: {
+                                    ownerAddress: nftTreasuryPda.toBase58(),
+                                    grouping: ['collection', NFT_MINT.toBase58()],
+                                    page: 1, limit: 100,
+                                },
+                            }),
+                        });
+                        const dasData = await dasRes.json();
+                        nftCount = dasData?.result?.total ?? dasData?.result?.items?.length ?? 0;
+                    } catch (e) {
+                        console.warn("Could not fetch NFT Treasury NFTs count", e);
+                    }
+
+                    balances.push({
+                        name: 'Wrap Contract Treasury',
+                        sss10i: wrapSss10iLiquid,
+                        nfts: nftCount
+                    });
+
+                    // 2. Pool Treasuries
+                    const activePools = POOL_CONFIGS.filter(p => !p.isOffline && p.poolPubkey);
+                    const poolPdas = activePools.map(p => new PublicKey(p.poolPubkey!));
+                    const treasuryAtas = poolPdas.map(poolPk => {
+                        const [treasuryPda] = PublicKey.findProgramAddressSync(
+                            [anchor.utils.bytes.utf8.encode('treasury'), poolPk.toBuffer()],
+                            PROGRAM_ID
+                        );
+                        return getAssociatedTokenAddressSync(SSS10i_MINT, treasuryPda, true, TOKEN_PROGRAM_ID);
+                    });
+
+                    try {
+                        const treasuryInfos = await connection.getMultipleAccountsInfo(treasuryAtas);
+                        activePools.forEach((pool, index) => {
+                            const info = treasuryInfos[index];
+                            let amount = 0;
+                            if (info && info.data.length >= 72) {
+                                const raw = info.data.readBigUInt64LE(64);
+                                amount = Number(raw) / 1e9;
+                            }
+                            balances.push({
+                                name: `${pool.title} Treasury (${pool.subtitle})`,
+                                sss10i: amount,
+                                nfts: null
+                            });
+                        });
+                    } catch (e) {
+                        console.warn("Could not fetch pool treasury balances", e);
+                    }
+
+                    setTreasuryBalances(balances);
+                } catch (err) {
+                    console.error("Treasury fetch error", err);
+                } finally {
+                    setFetchingTreasury(false);
+                }
+            };
+            fetchTreasury();
+            const interval = setInterval(fetchTreasury, 30000); // 30s refresh
+            return () => clearInterval(interval);
+        }
+    }, [activeSection]);
 
     useEffect(() => {
         setSidebarOpen(false);
@@ -867,6 +969,31 @@ const DocsTerminal: React.FC = () => {
                         <p className="section-intro">Full disclosure of administrative controls and protocol governance.</p>
 
                         <div className="transparency-grid">
+                            <div className="transparency-card safe" style={{ gridColumn: '1 / -1' }}>
+                                <h3>Current Treasury Information</h3>
+                                <p style={{ marginBottom: '15px', color: '#a3a3a3' }}>Real-time on-chain verification of all protocol treasuries.</p>
+                                
+                                <div className="fee-table" style={{ margin: '0' }}>
+                                    <div className="fee-row header-row" style={{ fontWeight: 'bold', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
+                                        <span className="fee-label" style={{flex: 2, paddingLeft: '0'}}>Treasury Account</span>
+                                        <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px'}}>Liquid $SSS10i</span>
+                                        <span className="fee-note" style={{flex: 1, textAlign: 'right'}}>wSSS10i (NFTs)</span>
+                                    </div>
+                                    
+                                    {fetchingTreasury && treasuryBalances.length === 0 ? (
+                                        <div className="fee-row">
+                                            <span style={{flex: 1, textAlign: 'center', opacity: 0.5}} className="loading-pulse">SYNCING WITH CHAIN...</span>
+                                        </div>
+                                    ) : treasuryBalances.map((tb, idx) => (
+                                        <div className="fee-row" key={idx}>
+                                            <span className="fee-label" style={{flex: 2, paddingLeft: '0'}}>{tb.name}</span>
+                                            <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px'}}>{tb.sss10i > 0 ? tb.sss10i.toFixed(4) : '0.0000'}</span>
+                                            <span className="fee-note" style={{flex: 1, textAlign: 'right'}}>{tb.nfts !== null ? tb.nfts : '—'}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
                             <div className="transparency-card">
                                 <h3>Pool & Emission Control</h3>
                                 <p>As CH, I maintain full control over pools and emissions. I can <strong>not</strong> increase the supply of $SSS10i, but I can increase/decrease/remove emissions from pools, and add new ones.</p>
