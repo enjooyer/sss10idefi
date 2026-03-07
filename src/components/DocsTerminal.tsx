@@ -77,11 +77,40 @@ interface TreasuryBalance {
     isGlobal?: boolean;
 }
 
+const VALID_SECTIONS: DocSection[] = [
+    'introduction', 'vision', 'how-it-works', 'why-77', 'effects',
+    'tokenomics', 'farming-pairs', 'farming-guide', 'strategies',
+    'wrap-unwrap', 'emergency', 'transparency', 'disclaimer'
+];
+
 const DocsTerminal: React.FC = () => {
-    const [activeSection, setActiveSection] = useState<DocSection>('introduction');
+    const [activeSection, setActiveSection] = useState<DocSection>(() => {
+        const hash = window.location.hash.replace('#', '') as DocSection;
+        return VALID_SECTIONS.includes(hash) ? hash : 'introduction';
+    });
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [treasuryBalances, setTreasuryBalances] = useState<TreasuryBalance[]>([]);
     const [fetchingTreasury, setFetchingTreasury] = useState(false);
+
+    // Sync activeSection with URL hash
+    useEffect(() => {
+        const hash = `#${activeSection}`;
+        if (window.location.hash !== hash) {
+            window.history.replaceState(null, '', hash);
+        }
+    }, [activeSection]);
+
+    // Handle back/forward hash changes
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#', '') as DocSection;
+            if (VALID_SECTIONS.includes(hash)) {
+                setActiveSection(hash);
+            }
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
 
     useEffect(() => {
         if (activeSection === 'transparency') {
