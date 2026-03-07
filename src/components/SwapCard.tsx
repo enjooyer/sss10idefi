@@ -4,6 +4,7 @@ import { PublicKey, VersionedTransaction, LAMPORTS_PER_SOL } from '@solana/web3.
 import { Buffer } from 'buffer';
 import { getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from '@solana/spl-token';
 import { useToast } from './ToastProvider';
+import { getLivePrices } from '../utils/priceProvider';
 import './SwapCard.css';
 
 // Whitelisted tokens with real Mainnet mint addresses
@@ -139,6 +140,22 @@ const SwapCard: React.FC = () => {
         showToast('Building swap via Jupiter...', 'info');
 
         try {
+            // Determine maximum priority fee based on swap USD value
+            const prices = getLivePrices();
+            const tokenPrice = (prices as any)[fromToken.symbol] || 0;
+            const swapUsdValue = Number(amount) * tokenPrice;
+            
+            // For small swaps, cap priority fee strictly to prevent Phantom's "malicious drainer" warning
+            // For larger swaps, allow a higher max priority fee to ensure fast execution
+            let maxLamports = 1000000; // Default 0.001 SOL (~$0.15)
+            if (tokenPrice > 0 && swapUsdValue < 5.0) {
+                maxLamports = 250000; // 0.00025 SOL (~$0.04) for swaps under $5
+            } else if (tokenPrice > 0) {
+                maxLamports = 5000000; // 0.005 SOL (~$0.75) for swaps over $5
+            } else {
+                maxLamports = 1000000; // Fallback
+            }
+
             const swapRes = await fetch(JUPITER_SWAP_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -147,7 +164,12 @@ const SwapCard: React.FC = () => {
                     userPublicKey: wallet.publicKey.toBase58(),
                     wrapAndUnwrapSol: true,
                     dynamicComputeUnitLimit: true,
-                    prioritizationFeeLamports: 'auto',
+                    prioritizationFeeLamports: {
+                        priorityLevelWithMaxLamports: {
+                            maxLamports: maxLamports,
+                            priorityLevel: "veryHigh" // Ensures fast routing but capped by maxLamports
+                        }
+                    },
                 }),
             });
 
