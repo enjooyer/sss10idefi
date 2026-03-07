@@ -1073,6 +1073,40 @@ const DocsTerminal: React.FC = () => {
                                 <li><strong>Verify all links</strong> — DO NOT GET PHISHED. Always double-check URLs.</li>
                             </ol>
                         </div>
+
+                        <div className="dev-wallets" style={{ marginTop: '2rem' }}>
+                            <h3 style={{ marginBottom: '1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', paddingBottom: '0.5rem' }}>Dev Wallets</h3>
+                            <div className="transparency-card safe">
+                                <div style={{ marginBottom: '15px' }}>
+                                    <strong style={{ color: '#fff' }}>$CARDANO Deployer</strong>
+                                    <br />
+                                    <a href="https://solscan.io/account/7UAoe37En731HdsLaue7b5guWewwaKjqfodENCacQLWq" target="_blank" rel="noopener noreferrer" className="docs-external-link" style={{ wordBreak: 'break-all', fontSize: '0.9em', marginTop: '4px', display: 'inline-block' }}>
+                                        7UAoe37En731HdsLaue7b5guWewwaKjqfodENCacQLWq ↗
+                                    </a>
+                                </div>
+                                <div style={{ marginBottom: '15px' }}>
+                                    <strong style={{ color: '#fff' }}>RanchBot - Prediction Markets/Airdrops</strong>
+                                    <br />
+                                    <a href="https://solscan.io/account/CHCHjCyi7pXhqX1t4sJHYrqeMXfqMhEGMtQoT5jSGnPd" target="_blank" rel="noopener noreferrer" className="docs-external-link" style={{ wordBreak: 'break-all', fontSize: '0.9em', marginTop: '4px', display: 'inline-block' }}>
+                                        CHCHjCyi7pXhqX1t4sJHYrqeMXfqMhEGMtQoT5jSGnPd ↗
+                                    </a>
+                                </div>
+                                <div style={{ marginBottom: '15px' }}>
+                                    <strong style={{ color: '#fff' }}>Program Deployer/Upgrade Authority + Liquid SSS10i Deployer</strong>
+                                    <br />
+                                    <a href="https://solscan.io/account/99KuEmaUQfxmoPrqvUXMijWiCmw4uX6kXRea7hZDbG6E" target="_blank" rel="noopener noreferrer" className="docs-external-link" style={{ wordBreak: 'break-all', fontSize: '0.9em', marginTop: '4px', display: 'inline-block' }}>
+                                        99KuEmaUQfxmoPrqvUXMijWiCmw4uX6kXRea7hZDbG6E ↗
+                                    </a>
+                                </div>
+                                <div>
+                                    <strong style={{ color: '#fff' }}>Dev Testing Wallet</strong>
+                                    <br />
+                                    <a href="https://solscan.io/account/6RUsHrVxnwHZYihWVBnZxMnDekBQ4S8iQNwd6D3LEiQg" target="_blank" rel="noopener noreferrer" className="docs-external-link" style={{ wordBreak: 'break-all', fontSize: '0.9em', marginTop: '4px', display: 'inline-block' }}>
+                                        6RUsHrVxnwHZYihWVBnZxMnDekBQ4S8iQNwd6D3LEiQg ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 );
 
