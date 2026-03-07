@@ -117,8 +117,7 @@
 }
 
 .burn-card .value {
-    font-size: clamp(20px, 4vw, 32px); /* Responsive small font to fit large burn number */
-    white-space: nowrap;
+    font-size: clamp(20px, 2.5vw, 32px); /* Responsive small font to fit large burn number */
 }
 
 .fire-text {
