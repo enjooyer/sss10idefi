@@ -32,6 +32,7 @@ const SwapCard: React.FC = () => {
     const [showToSelect, setShowToSelect] = useState(false);
     const [fromBalance, setFromBalance] = useState<string>('—');
     const [toBalance, setToBalance] = useState<string>('—');
+    const [balanceRefreshTrigger, setBalanceRefreshTrigger] = useState(0);
     const quoteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const wallet = useAnchorWallet();
@@ -64,12 +65,22 @@ const SwapCard: React.FC = () => {
         }
     }, [wallet, connection]);
 
-    // Refresh balances whenever tokens or wallet changes
+    // Refresh balances whenever tokens, wallet, or trigger changes
     useEffect(() => {
+        let active = true;
         if (!wallet) { setFromBalance('—'); setToBalance('—'); return; }
-        fetchBalance(fromToken.mint, fromToken.decimals, fromToken.isToken2022).then(setFromBalance);
-        fetchBalance(toToken.mint, toToken.decimals, toToken.isToken2022).then(setToBalance);
-    }, [wallet, fromToken, toToken, fetchBalance]);
+        
+        // Fetch and safely set balances
+        fetchBalance(fromToken.mint, fromToken.decimals, fromToken.isToken2022).then(bal => {
+            if (active) setFromBalance(bal);
+        });
+        
+        fetchBalance(toToken.mint, toToken.decimals, toToken.isToken2022).then(bal => {
+            if (active) setToBalance(bal);
+        });
+
+        return () => { active = false; };
+    }, [wallet, fromToken, toToken, fetchBalance, balanceRefreshTrigger]);
 
     // Fetch Jupiter quote with debounce
     const fetchQuote = useCallback(async () => {
@@ -195,9 +206,8 @@ const SwapCard: React.FC = () => {
             console.log('✅ Swap TX:', txId);
             setAmount('');
             setQuote(null);
-            // Refresh balances
-            fetchBalance(fromToken.mint, fromToken.decimals, fromToken.isToken2022).then(setFromBalance);
-            fetchBalance(toToken.mint, toToken.decimals, toToken.isToken2022).then(setToBalance);
+            // Refresh balances using effect trigger to avoid stale token states
+            setBalanceRefreshTrigger(prev => prev + 1);
         } catch (err: any) {
             console.error('Swap Error:', err);
             showToast(`Swap Failed: ${err?.message || err}`, 'error');
