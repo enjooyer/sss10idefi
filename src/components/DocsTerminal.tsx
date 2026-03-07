@@ -996,8 +996,8 @@ const DocsTerminal: React.FC = () => {
                                 <div className="fee-table" style={{ margin: '0' }}>
                                     <div className="fee-row header-row" style={{ fontWeight: 'bold', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
                                         <span className="fee-label" style={{flex: 2, paddingLeft: '0'}}>Treasury Account</span>
-                                        <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px'}}>Liquid $SSS10i</span>
-                                        <span className="fee-note" style={{flex: 1, textAlign: 'right'}}>wSSS10i (NFTs)</span>
+                                        <span className="fee-value treasury-val-header">Liquid $SSS10i</span>
+                                        <span className="fee-note treasury-nft-header">wSSS10i (NFTs)</span>
                                     </div>
                                     
                                     {fetchingTreasury && treasuryBalances.length === 0 ? (
@@ -1005,19 +1005,19 @@ const DocsTerminal: React.FC = () => {
                                             <span style={{flex: 1, textAlign: 'center', opacity: 0.5}} className="loading-pulse">SYNCING WITH CHAIN...</span>
                                         </div>
                                     ) : treasuryBalances.map((tb, idx) => (
-                                        <div className="fee-row" key={idx} style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-                                            <div style={{ flex: 2, display: 'flex', flexDirection: 'column', paddingLeft: '0' }}>
+                                        <div className="fee-row treasury-row" key={idx}>
+                                            <div className="treasury-label-col">
                                                 <span className="fee-label" style={{ paddingLeft: '0', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                     {tb.name}
-                                                    {tb.isGlobal && <span style={{ fontSize: '0.65em', background: 'rgba(0,255,128,0.1)', color: '#00ff80', padding: '2px 6px', borderRadius: '4px', letterSpacing: '1px' }}>GLOBAL</span>}
+                                                    {tb.isGlobal && <span className="global-badge">GLOBAL</span>}
                                                 </span>
-                                                <a href={`https://solscan.io/account/${tb.address}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75em', color: '#a3a3a3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '4px', width: 'fit-content' }}>
+                                                <a href={`https://solscan.io/account/${tb.address}`} target="_blank" rel="noopener noreferrer" className="treasury-link">
                                                     <span style={{ fontFamily: 'monospace' }}>{tb.address.slice(0, 4)}...{tb.address.slice(-4)}</span>
                                                     <span style={{ fontSize: '0.9em' }}>↗</span>
                                                 </a>
                                             </div>
-                                            <span className="fee-value" style={{flex: 1, textAlign: 'right', paddingRight: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', fontSize: '1.1em'}}>{tb.sss10i > 0 ? tb.sss10i.toFixed(4) : '0.0000'}</span>
-                                            <span className="fee-note" style={{flex: 1, textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                            <span className="fee-value treasury-val">{tb.sss10i > 0 ? tb.sss10i.toFixed(4) : '0.0000'}</span>
+                                            <span className="fee-note treasury-nft">
                                                 {tb.nfts !== null ? (
                                                     <span style={{ color: '#00ff80', fontWeight: 'bold', fontSize: '1.1em' }}>{tb.nfts}</span>
                                                 ) : (
