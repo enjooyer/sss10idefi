@@ -236,6 +236,14 @@ const PoolCard: React.FC<PoolCardProps> = ({
             }
             const amount = userStakedRaw;
 
+            // Create user's LP ATA if it doesn't exist (fixes error 3012 when user closes their empty LP account)
+            const createAtaIx = createAssociatedTokenAccountIdempotentInstruction(
+                wallet.publicKey,
+                userLpAccount,
+                wallet.publicKey,
+                lpMintPubkey
+            );
+
             await program.methods.withdrawLp(amount)
                 .accounts({
                     global: globalPda,
@@ -249,6 +257,7 @@ const PoolCard: React.FC<PoolCardProps> = ({
                     systemProgram: SystemProgram.programId,
                     associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
                 })
+                .preInstructions([createAtaIx])
                 .rpc();
 
             showToast(`Success: Withdrawn from ${subtitle}!`, 'success');
