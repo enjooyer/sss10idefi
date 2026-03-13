@@ -14,7 +14,7 @@ export interface TickerItem {
 
 const CARDANO_INITIAL_SUPPLY = 1_000_000_000; // pump.fun tokens start at 1B
 
-// All 6 pool treasury PDAs for tracking locked emissions
+// All 7 pool treasury PDAs for tracking locked emissions
 const POOL_PUBKEYS = [
     'GNwnKFx2v6zoPRtnv7SxN3mhAKfy4c1dmRZA1WkfkMFp',
     '6k7fotdNejY4v2Y6LRRELPPBJPdr9WDQkt5PdSCQWnmP',
@@ -22,6 +22,7 @@ const POOL_PUBKEYS = [
     'BdsRqJg5aA9H1aetXgniVQTh4SFpkzYcxSQCgkTa8FRK',
     'ADEyjn3apNiUJ5t5rjEGaysuiX7APu1ihbfkrG6c3PCk',
     '7mGYx1maeJNrBoB9KKHuf8VDLF3yfWJQAQVyWQXHsvEs',
+    '9QPLW8u5g1V1iSTfWhHkQnZHiFBnwpmX2sz5PPzEhx85', // CARDANO/AVAX
 ];
 
 export const useTickerData = () => {
