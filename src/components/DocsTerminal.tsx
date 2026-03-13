@@ -560,6 +560,15 @@ const DocsTerminal: React.FC = () => {
                                 <h3>BULK / CARDANO</h3>
                                 <span className="pair-status active">Active</span>
                             </div>
+                            <div className="pair-card">
+                                <div className="pair-tokens">
+                                    <img src="/logos/CARDANO.png" alt="CARDANO" className="token-icon-img" />
+                                    <span className="pair-slash">/</span>
+                                    <img src="/logos/AVAX.png" alt="AVAX" className="token-icon-img" />
+                                </div>
+                                <h3>CARDANO / AVAX</h3>
+                                <span className="pair-status pending">Pending</span>
+                            </div>
                         </div>
 
                         <h2>Partner Farms</h2>

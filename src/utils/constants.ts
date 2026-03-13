@@ -31,6 +31,7 @@ export const HARRY_MINT = new PublicKey("7oZCgJNtCFvBNBNx7S1Nza9TwfzSNaovXMkfnk4
 export const BULK_MINT = new PublicKey("F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump");
 export const SOL_MINT = new PublicKey("So11111111111111111111111111111111111111112");
 export const USDC_MINT = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
+export const AVAX_MINT = new PublicKey("avaxGHCq3T7hoxd73oY2KY9hJSTaeMibXvHy5KNzh5D");
 
 // Metadata Program for NFTs
 export const METAPLEX_PROGRAM_ID = new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s");

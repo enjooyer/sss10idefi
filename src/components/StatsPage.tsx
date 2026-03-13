@@ -24,6 +24,8 @@ const KNOWN_POOL_PUBKEYS = [
     { address: 'BdsRqJg5aA9H1aetXgniVQTh4SFpkzYcxSQCgkTa8FRK', name: 'SSS10i/USDC LP' },
     { address: 'ADEyjn3apNiUJ5t5rjEGaysuiX7APu1ihbfkrG6c3PCk', name: 'HARRY/CARDANO LP' },
     { address: '7mGYx1maeJNrBoB9KKHuf8VDLF3yfWJQAQVyWQXHsvEs', name: 'BULK/CARDANO LP' },
+    // TODO: Update THIS address when the pool is created on-chain using the script
+    { address: '11111111111111111111111111111111', name: 'CARDANO/AVAX LP' }, // Placeholder address
 ];
 const TOTAL_NFT_SUPPLY = 77;
 

@@ -13,6 +13,7 @@ const TOKENS = [
     { name: 'USDC', symbol: 'USDC', mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6, logo: '/logos/USDC.png', isToken2022: false },
     { name: 'SSS10i', symbol: 'SSS10i', mint: 'AnDgVLkfHUmuSrKMFsqFy8d7Fw49CzJjWk1uZZYPcSei', decimals: 9, logo: '/logos/sss10i.jpg', isToken2022: false },
     { name: 'CARDANO', symbol: 'CARDANO', mint: '2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump', decimals: 6, logo: '/logos/CARDANO.png', isToken2022: true },
+    { name: 'AVAX', symbol: 'AVAX', mint: 'avaxGHCq3T7hoxd73oY2KY9hJSTaeMibXvHy5KNzh5D', decimals: 9, logo: '/logos/AVAX.png', isToken2022: false },
     { name: 'HARRY', symbol: 'HARRY', mint: '7oZCgJNtCFvBNBNx7S1Nza9TwfzSNaovXMkfnk4gpump', decimals: 6, logo: '/logos/HarryPepe.jpg', isToken2022: true },
     { name: 'BULK', symbol: 'BULK', mint: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', decimals: 6, logo: '/logos/bulk.jpg', isToken2022: true },
 ];
