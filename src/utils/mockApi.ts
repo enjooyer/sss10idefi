@@ -53,6 +53,21 @@ export const POOL_CONFIGS: PoolData[] = [
     },
     {
         id: "pool-3",
+        title: "Avalanche",
+        subtitle: "CARDANO / AVAX",
+        staked: "0.00",
+        tokenIcon: "/assets/tokens/AVAX.png",
+        baseIcon: "/assets/tokens/CARDANO.png",
+        totalStakedUsd: "0",
+        endsInDays: 365,
+        lpMintAddress: "BMwgNkB2s9GNUxjrU2Uq6eNkaY3z6VZr37dEnTzLBzUN",
+        poolPubkey: "9QPLW8u5g1V1iSTfWhHkQnZHiFBnwpmX2sz5PPzEhx85",
+        raydiumPoolId: "4aybdzA4fADC2UgvPwMLqHuHux7T2NdGi2m81zLpS2JY",
+        poolMintA: "2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump",
+        poolMintB: "avaxGHCq3T7hoxd73oY2KY9hJSTaeMibXvHy5KNzh5D"
+    },
+    {
+        id: "pool-4",
         title: "Alignment",
         subtitle: "SSS10I / CARDANO",
         staked: "0.00",
@@ -67,7 +82,7 @@ export const POOL_CONFIGS: PoolData[] = [
         poolMintB: "2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump"
     },
     {
-        id: "pool-4",
+        id: "pool-5",
         title: "Stable JPEGS",
         subtitle: "SSS10I / USDC",
         staked: "0.00",
@@ -82,7 +97,7 @@ export const POOL_CONFIGS: PoolData[] = [
         poolMintB: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     },
     {
-        id: "pool-5",
+        id: "pool-6",
         title: "Harry Pepe",
         subtitle: "HARRY / CARDANO",
         staked: "0.00",
@@ -98,7 +113,7 @@ export const POOL_CONFIGS: PoolData[] = [
         isTrinity: true
     },
     {
-        id: "pool-6",
+        id: "pool-7",
         title: "Bulked",
         subtitle: "BULK / CARDANO",
         staked: "0.00",
@@ -111,22 +126,6 @@ export const POOL_CONFIGS: PoolData[] = [
         raydiumPoolId: "GyMWpDvWRFxMTWx5ofkB53qnaAVRQ9GqLdQHdUBgZsv9",
         poolMintA: "F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump",
         poolMintB: "2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump",
-        isTrinity: true
-    },
-    {
-        id: "pool-7",
-        title: "Avalanche",
-        subtitle: "CARDANO / AVAX",
-        staked: "0.00",
-        tokenIcon: "/assets/tokens/AVAX.png",
-        baseIcon: "/assets/tokens/CARDANO.png",
-        totalStakedUsd: "0",
-        endsInDays: 365,
-        lpMintAddress: "BMwgNkB2s9GNUxjrU2Uq6eNkaY3z6VZr37dEnTzLBzUN",
-        poolPubkey: "PUT_YOUR_POOL_PUBKEY_HERE",
-        raydiumPoolId: "4aybdzA4fADC2UgvPwMLqHuHux7T2NdGi2m81zLpS2JY",
-        poolMintA: "2HE1yvnVitiBEzU1fud7kPsGv89eP7TBwSd8D3tPpump",
-        poolMintB: "avaxGHCq3T7hoxd73oY2KY9hJSTaeMibXvHy5KNzh5D",
         isTrinity: true
     }
 ];

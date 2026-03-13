@@ -1,7 +1,7 @@
 // priceProvider.ts
 // Utility to simulate or fetch real-time USD valuations for Facility Sieben assets.
 
-import { CARDANO_MINT, SSS10i_MINT, SOL_MINT, USDC_MINT, RPC_URL } from './constants';
+import { CARDANO_MINT, SSS10i_MINT, SOL_MINT, USDC_MINT, AVAX_MINT, RPC_URL } from './constants';
 
 let livePrices = {
     CARDANO: 0.00002,
@@ -9,7 +9,8 @@ let livePrices = {
     SOL: 145.00,
     USDC: 1.00,
     HARRY: 0.0,
-    BULK: 0.0
+    BULK: 0.0,
+    AVAX: 0.0
 };
 
 export const fetchLivePrices = async () => {
@@ -22,6 +23,7 @@ export const fetchLivePrices = async () => {
             { mint: USDC_MINT.toBase58(), key: 'USDC' },
             { mint: '7oZCgJNtCFvBNBNx7S1Nza9TwfzSNaovXMkfnk4gpump', key: 'HARRY' },
             { mint: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', key: 'BULK' },
+            { mint: AVAX_MINT.toBase58(), key: 'AVAX' },
         ];
         
         // Fetch prices from DexScreener (free, no auth) — all in parallel
@@ -66,6 +68,7 @@ const POOL_LP_MINTS: Record<string, string> = {
     'H8h4JL8McdF7P9Zkta9Jaxb3UjjMbxpbaJBxqzWfaUFB': 'HNXgfh2PzRHMuPVGz7qyeTF9LunRvpg4P9cw5veMU8wg', // SSS10i/USDC
     '7uj4GTeKxPPTdmpn1JToRvsT2euJ7hwphs2oUY3rwGFM': '46vpcjrqZ7aPpAwzQkXHyc2ihoWMf3TYKarLbaA7mZTD', // HARRY/CARDANO
     'GyMWpDvWRFxMTWx5ofkB53qnaAVRQ9GqLdQHdUBgZsv9': 'ByZeE5GPEX1HdqLH4DDUvR665SmQhkbtjEdQkZw4RCmd', // BULK/CARDANO
+    '4aybdzA4fADC2UgvPwMLqHuHux7T2NdGi2m81zLpS2JY': 'BMwgNkB2s9GNUxjrU2Uq6eNkaY3z6VZr37dEnTzLBzUN', // CARDANO/AVAX
 };
 
 /**
@@ -159,6 +162,8 @@ export const getLpUsdValue = (amount: number, poolSubtitle: string, raydiumPoolI
         pricePerLp = 0.052; // DexScreener does not track yet. Raydium values ~100 LP tokens at $5.26 total.
     } else if (poolSubtitle.includes("BULK")) {
         pricePerLp = 0.13;
+    } else if (poolSubtitle.includes("AVAX")) {
+        pricePerLp = 0.10; // Fallback until DexScreener cache populates
     }
 
     return amount * pricePerLp;
