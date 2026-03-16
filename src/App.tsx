@@ -82,6 +82,14 @@ function App() {
         </div>
 
         <div className="app-container">
+          <div className="closing-banner">
+            <span className="closing-banner__icon">⚠️</span>
+            <span className="closing-banner__text">
+              <strong>Notice:</strong> SSS10i Defi Mechanism will be closing. Please withdraw your LP tokens. Cardano lives on. Please see{' '}
+              <a href="https://t.me/sss10inu" target="_blank" rel="noopener noreferrer">Telegram</a> for more information.
+            </span>
+            <span className="closing-banner__icon">⚠️</span>
+          </div>
           <HeaderTicker />
 
           {/* ═════════════ DESKTOP HEADER ═════════════ */}

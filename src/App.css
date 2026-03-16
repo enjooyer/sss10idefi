@@ -12,6 +12,53 @@
   z-index: 10;
 }
 
+/* ═══════ CLOSING BANNER — Unmissable Red Alert ═══════ */
+.closing-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #8b0000, #cc0000, #8b0000);
+  background-size: 200% 100%;
+  animation: bannerShimmer 3s ease infinite;
+  color: #ffffff;
+  padding: 14px 24px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  border-bottom: 2px solid #ff4444;
+  box-shadow: 0 4px 20px rgba(200, 0, 0, 0.4);
+  z-index: 150;
+}
+
+.closing-banner__icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.closing-banner__text {
+  max-width: 800px;
+}
+
+.closing-banner__text a {
+  color: #ffd700;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.closing-banner__text a:hover {
+  color: #fff;
+}
+
+@keyframes bannerShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* ═══════ HEADER — Sticky Top Bar ═══════ */
 .defi-header {
   display: flex;
