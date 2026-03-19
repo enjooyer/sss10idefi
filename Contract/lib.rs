@@ -611,6 +611,31 @@ pub mod site_zero_matrix {
         Ok(())
     }
 
+    // 4.1 EMERGENCY: Recover from Global NFT Treasury (Admin Only)
+    // Bypasses IDL truncation issues by directly signing for the NFT Treasury PDA
+    pub fn admin_recover_global_nft(ctx: Context<AdminRecoverGlobalNft>) -> Result<()> {
+        let global = &mut ctx.accounts.global;
+        // Verify only admin can orchestrate this
+        require!(ctx.accounts.authority.key() == global.authority, MatrixError::Unauthorized);
+
+        let seeds = &[b"nft_treasury".as_ref(), &[ctx.bumps.nft_treasury]];
+        let signer = &[&seeds[..]];
+
+        // Just transfer 1 NFT out using the PDA signature
+        let cpi_transfer_nft = Transfer {
+            from: ctx.accounts.source_ata.to_account_info(),
+            to: ctx.accounts.destination_ata.to_account_info(),
+            authority: ctx.accounts.nft_treasury.to_account_info(),
+        };
+        token::transfer(
+            CpiContext::new_with_signer(ctx.accounts.token_program.to_account_info(), cpi_transfer_nft, signer),
+            1
+        )?;
+
+        emit!(ArtifactForged { user: ctx.accounts.authority.key() }); // Re-use event just to log
+        Ok(())
+    }
+
     pub fn unwrap_to_fractions(ctx: Context<UnwrapToFractionGlobal>) -> Result<()> {
         let amount = 1_000_000_000; // 1.0 SSS10i (9 Decimals)
         let burn_amount = 50_000_000_000_u64; // 50,000 $CARDANO (6 decimals: 50_000 * 10^6)
@@ -1196,6 +1221,47 @@ pub struct UnwrapToFractionGlobal<'info> {
 
     pub token_program: Program<'info, Token>,
     pub token_2022_program: Program<'info, Token2022>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct AdminRecoverGlobalNft<'info> {
+    #[account(seeds = [b"global"], bump)]
+    pub global: Account<'info, GlobalState>,
+    
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    /// The mint of the token being recovered
+    pub token_mint: Account<'info, Mint>,
+
+    /// CHECK: Global NFT Treasury PDA
+    #[account(
+        mut, 
+        seeds = [b"nft_treasury"], 
+        bump
+    )]
+    pub nft_treasury: AccountInfo<'info>,
+
+    /// Source ATA: Global NFT treasury's token account
+    #[account(
+        mut,
+        associated_token::mint = token_mint,
+        associated_token::authority = nft_treasury,
+    )]
+    pub source_ata: Account<'info, TokenAccount>,
+
+    /// Destination ATA: admin's token account
+    #[account(
+        init_if_needed,
+        payer = authority,
+        associated_token::mint = token_mint,
+        associated_token::authority = authority,
+    )]
+    pub destination_ata: Account<'info, TokenAccount>,
+
+    pub token_program: Program<'info, Token>,
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
 }

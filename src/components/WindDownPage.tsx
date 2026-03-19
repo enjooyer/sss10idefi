@@ -11,7 +11,7 @@ const WindDownPage: React.FC = () => {
         </p>
         <div className="wind-down-message-box">
           <p>
-            99% of depositors withdrew, if you were the one with approx. $70 worth of LP deposited it has been permanently burned - please contact CH on Telegram <a href="https://t.me/Number1Dev" target="_blank" rel="noopener noreferrer" className="ch-link">@Number1Dev</a> for a refund
+            99% of depositors withdrew, apart from approx. $70 worth of TVL which has now been permanently burned in the LP. A refund will be issued shortly to the depositor(s) in equal parts Cardano/SOL as this was the only pool with a remaining deposit.
           </p>
         </div>
         <p className="wind-down-signoff">
